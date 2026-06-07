@@ -1,0 +1,21 @@
+module.exports = {
+  customers: ['customer_name', 'phone', 'address', 'company_name'],
+  containers: ['container_number', 'bl_number', 'origin_country', 'loading_date', 'current_status', 'customer_id'],
+  trucks: ['truck_number', 'driver_id'],
+  exchange_transactions: ['office_id', 'transaction_type', 'amount', 'currency', 'transaction_date', 'notes'],
+  border_transactions: ['border_id', 'transaction_type', 'amount', 'description', 'transaction_date'],
+  invoices: ['invoice_number', 'customer_id', 'invoice_date', 'total_amount', 'status'],
+  invoice_items: ['invoice_id', 'description', 'amount'],
+  payments: ['customer_id', 'invoice_id', 'amount', 'payment_date', 'payment_method'],
+  container_expenses: ['container_id', 'expense_type', 'amount', 'expense_date', 'description'],
+  truck_expenses: ['truck_id', 'expense_type', 'amount', 'expense_date'],
+  border_expenses: ['border_id', 'container_id', 'expense_type', 'amount', 'expense_date', 'description'],
+  border_payments: ['border_id', 'amount', 'payment_date', 'payment_method', 'notes'],
+  drivers: ['driver_name', 'phone', 'license_number', 'is_active'],
+  truck_loads: ['truck_id', 'container_id', 'loading_date', 'destination', 'transport_charge'],
+  container_tracking: ['container_id', 'location_name', 'tracking_status', 'tracking_date', 'remarks', 'created_by'],
+  container_routes: ['container_id', 'border_name', 'arrival_date', 'departure_date', 'remarks'],
+  accounts: ['account_code', 'account_name', 'account_type', 'is_active'],
+  journal_entries: ['entry_date', 'description', 'reference_type', 'reference_id', 'created_by'],
+  journal_entry_lines: ['journal_entry_id', 'account_id', 'debit_amount', 'credit_amount']
+};
