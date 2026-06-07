@@ -8,6 +8,8 @@ const { notFound, errorHandler } = require('./middleware/error.middleware');
 
 const app = express();
 
+app.use('/api/docs', require('./config/swagger'));
+app.get('/', (req, res) => res.redirect('/api/docs'));
 app.use(helmet());
 app.use(cors({ origin: env.corsOrigin === '*' ? true : env.corsOrigin }));
 app.use(express.json({ limit: '1mb' }));
