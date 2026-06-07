@@ -1,11 +1,10 @@
 require('dotenv').config({ quiet: true });
 
 const required = ['DATABASE_URL', 'JWT_SECRET'];
+const missing = required.filter((key) => !process.env[key]);
 
-for (const key of required) {
-  if (!process.env[key]) {
-    throw new Error(`Missing required environment variable: ${key}`);
-  }
+if (missing.length) {
+  throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
 }
 
 module.exports = {
