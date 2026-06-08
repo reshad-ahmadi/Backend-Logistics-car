@@ -1,8 +1,17 @@
 require('dotenv').config({ quiet: true });
 const crypto = require('crypto');
 
+function clean(value) {
+  const text = value?.trim();
+  return text || null;
+}
+
 function resolveDatabaseUrl() {
-  if (process.env.DATABASE_URL) return process.env.DATABASE_URL;
+  const direct =
+    clean(process.env.DATABASE_URL) ||
+    clean(process.env.POSTGRES_URL) ||
+    clean(process.env.INTERNAL_DATABASE_URL);
+  if (direct) return direct;
 
   const host = process.env.PGHOST || process.env.POSTGRES_HOST;
   const user = process.env.PGUSER || process.env.POSTGRES_USER;
