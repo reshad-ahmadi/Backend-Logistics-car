@@ -10,4 +10,8 @@ function assignmentFor(key, index) {
   return `"${key}" = ${placeholderFor(key, index)}`;
 }
 
-module.exports = { placeholderFor, assignmentFor };
+function idPlaceholder(index) {
+  return `$${index}::uuid`;
+}
+
+module.exports = { placeholderFor, assignmentFor, idPlaceholder };

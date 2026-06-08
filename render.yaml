@@ -1,3 +1,5 @@
+# Deploy with Render Dashboard → New → Blueprint (not a plain Web Service).
+# A normal Web Service will NOT read this file — set env vars manually (see RENDER_DEPLOY.md).
 services:
   - type: web
     name: backend-logistics
@@ -5,6 +7,7 @@ services:
     plan: free
     buildCommand: npm install && npx prisma generate
     startCommand: npm start
+    healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
         fromDatabase:

@@ -1,6 +1,6 @@
 const prisma = require('../config/database');
 const columns = require('./columns');
-const { placeholderFor, assignmentFor } = require('./sqlCasts');
+const { placeholderFor, assignmentFor, idPlaceholder } = require('./sqlCasts');
 const { fail } = require('../utils/http');
 const { fromDbError } = require('./dbErrors');
 
@@ -26,7 +26,10 @@ async function list(table, page = 1, limit = 50) {
 }
 
 async function getById(table, id) {
-  const rows = await prisma.$queryRawUnsafe(`SELECT * FROM "${table}" WHERE id = $1`, id);
+  const rows = await prisma.$queryRawUnsafe(
+    `SELECT * FROM "${table}" WHERE id = ${idPlaceholder(1)}`,
+    id
+  );
   if (!rows[0]) throw fail(404, 'Record not found');
   return rows[0];
 }
@@ -60,7 +63,7 @@ async function update(table, id, body) {
   const keys = Object.keys(data);
   if (!keys.length) throw fail(400, 'No valid fields provided');
   const set = keys.map((key, i) => assignmentFor(key, i + 2)).join(', ');
-  const sql = `UPDATE "${table}" SET ${set} WHERE id = $1 RETURNING *`;
+  const sql = `UPDATE "${table}" SET ${set} WHERE id = ${idPlaceholder(1)} RETURNING *`;
   return runWrite(async () => {
     const row = (await prisma.$queryRawUnsafe(sql, id, ...Object.values(data)))[0];
     if (!row) throw fail(404, 'Record not found');
@@ -68,7 +71,12 @@ async function update(table, id, body) {
   });
 }
 async function remove(table, id) {
-  const row = (await prisma.$queryRawUnsafe(`DELETE FROM "${table}" WHERE id = $1 RETURNING *`, id))[0];
+  const row = (
+    await prisma.$queryRawUnsafe(
+      `DELETE FROM "${table}" WHERE id = ${idPlaceholder(1)} RETURNING *`,
+      id
+    )
+  )[0];
   if (!row) throw fail(404, 'Record not found');
   return row;
 }
