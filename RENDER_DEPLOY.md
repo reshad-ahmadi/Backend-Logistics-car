@@ -23,18 +23,29 @@ If either is missing, the service crashes with:
 - Name: `backend-logistics-db`
 - Plan: **Free** → **Create**
 
-### 2. Add environment variables
+### 2. Link database + add JWT secret
 
-Open **Backend-Logistics-car** → **Environment** → **Add Environment Variable**:
+Open **Backend-Logistics-car** → **Environment**:
 
+**A) DATABASE_URL (recommended — one click)**  
+- **Add Environment Variable** → **Add from database**  
+- Select your PostgreSQL database  
+- Render adds `DATABASE_URL` automatically  
+
+**B) Or paste manually**  
+- Key: `DATABASE_URL`  
+- Value: Postgres → **Connections** → **Internal Database URL**
+
+**C) JWT_SECRET (required — type manually)**  
 | Key | Value |
 |-----|--------|
-| `DATABASE_URL` | From Postgres → **Connections** → **Internal Database URL** |
 | `JWT_SECRET` | Long random secret, e.g. `logistics_jwt_2026_change_me_to_random_32chars` |
 | `JWT_EXPIRES_IN` | `8h` |
 | `CORS_ORIGIN` | `*` or your frontend URL |
 
 Click **Save Changes** (Render redeploys automatically).
+
+> Pushing code to GitHub does **not** set these variables. You must add them in the Render dashboard.
 
 ### 3. Initialize database
 
